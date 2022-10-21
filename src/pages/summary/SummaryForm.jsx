@@ -1,20 +1,23 @@
 import { useState } from "react"
+import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
 
 const SummaryForm = () => {
-  const [disabled, setDisabled] = useState(true)
+  const [tcChecked, setTcChecked] = useState(true)
 
-  const handleChange = (e) => {
-    setDisabled(!e.target.checked)
-  }
-  
   return (
-    <>
-      <button disabled={disabled}>my button</button>
-      <div>
-        <label htmlFor="asd">my checkbox</label>
-        <input type="checkbox" id="asd" onChange={handleChange} />
-      </div>
-    </>
+    <Form>
+      <Form.Group>
+        <Form.Check
+          type="checkbox"
+          onChange={(e) => setTcChecked(!e.target.checked)}
+          label="Terms and Conditions"
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit" disabled={tcChecked}>
+        Confirm Order
+      </Button>
+    </Form>
   )
 }
 
