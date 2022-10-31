@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Button from "react-bootstrap/Button";
-import { useOrderDetails } from "../../contexts/OrderDetails";
-import AlertBanner from "../common/AlertBanner";
+import React, { useEffect, useState } from "react"
+import axios from "axios"
+import Button from "react-bootstrap/Button"
+import { useOrderDetails } from "../../contexts/OrderDetails"
+import AlertBanner from "../common/AlertBanner"
 
-export default function OrderConfirmation({ setOrderPhase }) {
-  const { resetOrder } = useOrderDetails();
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [error, setError] = useState(false);
+const OrderConfirmation = ({ setOrderPhase }) => {
+  const { resetOrder } = useOrderDetails()
+  const [orderNumber, setOrderNumber] = useState(null)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     axios
@@ -15,22 +15,20 @@ export default function OrderConfirmation({ setOrderPhase }) {
       // and send with POST
       .post(`http://localhost:3030/order`)
       .then((response) => {
-        setOrderNumber(response.data.orderNumber);
+        setOrderNumber(response.data.orderNumber)
       })
-      .catch((error) => setError(true));
-  }, []);
+      .catch((error) => setError(true))
+  }, [])
 
-  function handleClick() {
+  const handleClick = () => {
     // clear the order details
-    resetOrder();
+    resetOrder()
 
     // send back to order page
-    setOrderPhase("inProgress");
+    setOrderPhase("inProgress")
   }
 
-  const newOrderButton = (
-    <Button onClick={handleClick}>Create new order</Button>
-  );
+  const newOrderButton = <Button onClick={handleClick}>Create new order</Button>
 
   if (error) {
     return (
@@ -38,7 +36,7 @@ export default function OrderConfirmation({ setOrderPhase }) {
         <AlertBanner message={null} variant={null} />
         {newOrderButton}
       </>
-    );
+    )
   }
 
   if (orderNumber) {
@@ -51,8 +49,10 @@ export default function OrderConfirmation({ setOrderPhase }) {
         </p>
         {newOrderButton}
       </div>
-    );
+    )
   } else {
-    return <div>Loading</div>;
+    return <div>Loading</div>
   }
 }
+
+export default OrderConfirmation
